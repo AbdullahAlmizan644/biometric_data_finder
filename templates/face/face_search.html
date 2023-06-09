@@ -1,0 +1,107 @@
+{% extends "face/base.html" %}
+{% block title %} Face Search {% endblock %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+<style>
+    #drop-area {
+        width: 320px;
+        height: 220px;
+        border: 2px dashed #ccc;
+        text-align: center;
+        font-family: sans-serif;
+        margin: 20px auto;
+    }
+
+    #drop-area.highlight {
+        border-color: purple;
+    }
+
+    p {
+        margin-top: 0;
+    }
+</style>
+
+{% endblock %}
+{% block content %}
+
+<br><br><br><br>                                                        
+
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div id="drop-area" class="text-center">
+                <p>Drag and drop your photo here</p>
+                <p>or</p>
+                <form action="{% url "face_search" %}">
+                    <input type="file" id="file-input" name="face_image" class="form-control" accept="image/*" multiple>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4" id="preview-container">
+    </div>
+</div> -->
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div id="drop-area" class="text-center">
+                <p>Drag and drop your photo here</p>
+                <p>or</p>
+                <form action={% url "face_search" %} method="post" enctype="multipart/form-data" id="face" >
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-info" form="face" >Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4" id="preview-container">
+    </div>
+
+</div>
+
+
+{% block footer %}
+
+<script>
+    var fileInput = document.getElementById("file-input");
+    fileInput.addEventListener("change", function(event) {
+      var files = event.target.files;
+      handleFiles(files);
+    });
+
+    function handleFiles(files) {
+      var previewContainer = document.getElementById("preview-container");
+      previewContainer.innerHTML = "";
+
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (file.type.startsWith("image/")) {
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.src = event.target.result;
+            img.classList.add("img-thumbnail");
+            previewContainer.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  </script>                     
+
+{% endblock                 %}
+
+
+
+
+{% endblock %}

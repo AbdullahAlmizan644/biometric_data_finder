@@ -1,0 +1,41 @@
+{% extends "face/base.html" %}
+{% block title %} Search Results {% endblock %}
+{% load static %}
+
+{% block head %}
+
+<style>
+    .person_image{
+        width: 600px;
+        height: 600px;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<br><br><br><br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <img class="person_image" src="{{ match_data.person_face_image.url }}" alt="Person Image">
+            <h3>Name: {{ match_data.first_name }}</h3>
+            <!-- <p>Age: 30</p> -->
+            <p>Email: {{ match_data.email}}</p>
+            <p>Phone Number: {{ match_data.personal_number}}</p>
+            <p>Gurdian Number: {{ match_data.relative_number}}</p>
+            <p>Emegency Number: {{ match_data.emergency_number}}</p>
+            <p>Gender: {{ match_data.gender}}</p>
+            <p>District: {{ match_data.district}}</p>
+            <p>Division: {{ match_data.division}}</p>
+            <p>Address: {{ match_data.address}}</p>
+            
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
